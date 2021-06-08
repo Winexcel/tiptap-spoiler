@@ -1,11 +1,12 @@
 import { Node, mergeAttributes } from '@tiptap/core';
 import { VueNodeViewRenderer } from '@tiptap/vue-2';
-import Component from '@/components/Editor/extensions/Spoiler/SpoilerComponent';
+import Component from '@/components/Editor/extensions/Spoiler2/SpoilerComponent';
 
 export default Node.create({
-  name: 'editor-spoiler',
+  name: 'spoiler',
+  content: 'block*',
   group: 'block',
-  content: 'block+',
+  defining: true,
 
   addAttributes() {
     return {
@@ -16,18 +17,18 @@ export default Node.create({
   },
   parseHTML() {
     return [
-      { tag: 'editor-spoiler' },
+      { tag: 'spoiler' },
     ];
   },
-  renderHTML({ HTMLAttributes: attributes }) {
-    return ['editor-spoiler', mergeAttributes(attributes)];
+  renderHTML({ HTMLAttributes }) {
+    return ['spoiler', mergeAttributes(HTMLAttributes)];
   },
   addNodeView() {
     return VueNodeViewRenderer(Component);
   },
   addCommands() {
     return {
-      toggleSpoiler: () => ({ commands }) => commands.wrapIn('editor-spoiler'),
+      toggleSpoiler: () => ({ commands }) => commands.wrapIn('spoiler'),
     };
   }
 });
